@@ -5,7 +5,8 @@ using UnityEngine;
 public class WaypointFollow : MonoBehaviour
 {
 
-    public GameObject[] waypoints;
+    //public GameObject[] waypoints;
+    public UnityStandardAssets.Utility.WaypointCircuit circuit;
     int currentWP = 0;
 
     public float speed = 1.0f;
@@ -16,18 +17,18 @@ public class WaypointFollow : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        waypoints = GameObject.FindGameObjectsWithTag("waypoint");
+        //waypoints = GameObject.FindGameObjectsWithTag("waypoint");
     }
 
     // Update is called once per frame
     void LateUpdate()
     {
-        if(waypoints.Length == 0)
+        if(circuit.Waypoints.Length == 0)
         {
             return;
         }
 
-        Vector3 lookAtGoal = new Vector3(waypoints[currentWP].transform.position.x,this.transform.position.y,waypoints[currentWP].transform.position.z);
+        Vector3 lookAtGoal = new Vector3(circuit.Waypoints[currentWP].transform.position.x,this.transform.position.y,circuit.Waypoints[currentWP].transform.position.z);
 
         Vector3 direction = lookAtGoal - this.transform.position;
 
@@ -36,7 +37,7 @@ public class WaypointFollow : MonoBehaviour
         if(direction.magnitude < accuracy)
         {
             currentWP++;
-            if(currentWP >= waypoints.Length)
+            if(currentWP >= circuit.Waypoints.Length)
             {
                 currentWP = 0;
             }
